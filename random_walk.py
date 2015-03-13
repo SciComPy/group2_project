@@ -114,18 +114,93 @@ def runTrial(showHistory, test, p):
             s.showHistory(test+2, str(test))
 
 def runTest(numTrials, numDaysPerYear, numDays, numStocks, price, genMktBias=0.1):
-    #Constants used in testing
-    params = {}
-    params['price'] = price
-    params['numDays'] = numDays
-    params['numStocks'] = numStocks
-    params['bias'] = genMktBias/numDaysPerYear #General market bias
-    params['volUB'] = 12.0/numDaysPerYear #Upper bound on volatility for a stock
-    params['mo'] = 1.1/numDaysPerYear #Momentum factor
-    params['dailyBiasRange'] = (0.0, 4.0/numDaysPerYear)
 
-    for t in range(1, numTrials+1):
-        runTrial(True, t, params)
+    #Constants used in testing
+    if numTrials <= 0:
+        raise ValueError("Number of trials cannot be zero or negative")
+    elif numStocks <= 0:
+        raise ValueError("Stocks cannot be zero or negative")
+    elif price <= 0:
+        raise ValueError("Price cannot be zero or negative")
+    elif not (0.0 < numDaysPerYear <= 365.0):
+        raise ValueError("Number of days per year should be more than zero and less than 366")
+    elif numDays <= 0:
+        raise ValueError("Number of days cannot be zero or negative")
+    elif not (0.0 < genMktBias < 1.0):
+        raise ValueError("Bias should be greater than 0.0 and less than 1.0")
+
+    elif type(numTrials) == str:
+        raise TypeError("Trials cannot be string")
+    elif type(numStocks) == str:
+        raise TypeError("Stocks cannot be string")
+    elif type(price) == str:
+        raise TypeError("Prices cannot be string")
+    elif type(numDaysPerYear) == str:
+        raise TypeError("Number of days per year cannot be string")
+    elif type(numDays) == str:
+        raise TypeError("Number of days cannot be string")
+    elif type(genMktBias) == str:
+        raise TypeError("Bias cannot be string")
+
+    elif type(numTrials) == float:
+        raise TypeError("Number of trials should be an integer, float given")
+    elif type(numDays) == float:
+        raise TypeError("Number of days should be an integer, float given")
+    elif type(numStocks) == float:
+        raise TypeError("Number of stocks should be an integer, float given")
+
+
+    elif type(numTrials) == dict:
+        raise TypeError("Number of trials should be an integer, dictionary given")
+    elif type(price) == dict:
+        raise TypeError("Number of trials should be an integer, dictionary given")
+    elif type(numDaysPerYear) == dict:
+        raise TypeError("Number of trials should be an integer, dictionary given")
+    elif type(numDays) == dict:
+        raise TypeError("Number of trials should be an integer, dictionary given")
+    elif type(numStocks) == dict:
+        raise TypeError("Number of trials should be an integer, dictionary given")
+    elif type(genMktBias) == dict:
+        raise TypeError("Bias should be a float, dictionary given")
+
+    elif type(numTrials) == list:
+        raise TypeError("Number of trials should be an integer, list given")
+    elif type(price) == list:
+        raise TypeError("Number of trials should be an integer, list given")
+    elif type(numDaysPerYear) == list:
+        raise TypeError("Number of trials should be an integer, list given")
+    elif type(numDays) == list:
+        raise TypeError("Number of trials should be an integer, list given")
+    elif type(numStocks) == list:
+        raise TypeError("Number of trials should be an integer, list given")
+    elif type(genMktBias) == list:
+        raise TypeError("Bias should be a float, list given")
+
+    elif type(numTrials) == tuple:
+        raise TypeError("Number of trials should be an integer, tuple given")
+    elif type(price) == tuple:
+        raise TypeError("Number of trials should be an integer, tuple given")
+    elif type(numDaysPerYear) == tuple:
+        raise TypeError("Number of trials should be an integer, tuple given")
+    elif type(numDays) == tuple:
+        raise TypeError("Number of trials should be an integer, tuple given")
+    elif type(numStocks) == tuple:
+        raise TypeError("Number of trials should be an integer, tuple given")
+    elif type(genMktBias) == tuple:
+        raise TypeError("Bias should be a float, tuple given")
+    else:
+        params = {}
+        params['price'] = price
+        params['numDays'] = numDays
+        params['numStocks'] = numStocks
+        params['bias'] = genMktBias/numDaysPerYear #General market bias
+        params['volUB'] = 12.0/numDaysPerYear #Upper bound on volatility for a stock
+        params['mo'] = 1.1/numDaysPerYear #Momentum factor
+        params['dailyBiasRange'] = (0.0, 4.0/numDaysPerYear)
+
+        for t in range(1, numTrials+1):
+            runTrial(True, t, params)
+        return True
 
 # runTest(3)
 # pylab.show()
